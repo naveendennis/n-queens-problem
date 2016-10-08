@@ -1,0 +1,8 @@
+*.jar
+*.class
+*.swp
+*.classpath
+*.project
+*.jar
+*.prefs
+target/
