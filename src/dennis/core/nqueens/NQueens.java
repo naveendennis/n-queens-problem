@@ -1,41 +1,43 @@
 package dennis.core.nqueens;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Random;
 
 import dennis.core.HillClimbing;
 import dennis.core.beans.Node;
 import dennis.core.beans.State;
+import dennis.core.beans.nqueens.NodeImpl;
 import dennis.core.beans.nqueens.StateImpl;
+import dennis.core.util.NodeUtilImpl;
 
 public class NQueens implements HillClimbing {
 
-	private static NQueens NQUEENS;
+	private static Random RANDOM;
 	private int value;
 	
-	private NQueens(int value){
-		this.value = value;
+	static{
+		RANDOM = new Random();
 	}
 	
-	public static NQueens getInstance(int value){
-		if(NQUEENS == null){
-			NQUEENS = new NQueens(value);
-		}
-		return NQUEENS;
+	public NQueens(int value){
+		this.value = value;
 	}
 	
 	@Override
 	public Node makeNode(State currentState) {
-		// TODO Auto-generated method stub
-		return null;
+		return new NodeImpl(currentState);
 	}
 
 	@Override
-	public State hillClimbing() {
+	public Node hillClimbing() {
 		Node current = makeNode(new StateImpl(this.value));
 		while(true){
 			Node neighbour = getHighestValuedSuccessor(current);
-			if (neighbour.getHeuristicValue().compareTo(current.getHeuristicValue()) <= 0){
-				return current.getState();
+			if (current.getHeuristicValue().compareTo(neighbour.getHeuristicValue()) <= 0){
+				return current;
 			}
 			current = neighbour;
 		}
@@ -43,14 +45,24 @@ public class NQueens implements HillClimbing {
 
 	@Override
 	public Node getHighestValuedSuccessor(Node current) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		PriorityQueue<Node> allSuccessors = NodeUtilImpl.getInstance().calculateHeuristicValuesForAllSuccessors(current);
+//		printTreeSet(allSuccessors);
+		Iterator<Node> iterator = allSuccessors.iterator();
+		List<Node> topSuccessors = new ArrayList<Node>();
+		int heuristicValue = -1;
+		while(iterator.hasNext()){
+			Node currentNode = (Node) iterator.next();
+			if(heuristicValue == -1){
+				heuristicValue = currentNode.getHeuristicValue();
+				topSuccessors.add(currentNode);
+			}else if(heuristicValue == currentNode.getHeuristicValue()){
+				topSuccessors.add(currentNode);
+			}else{
+				break;
+			}
+		}
+		return topSuccessors.get(RANDOM.nextInt(topSuccessors.size()));
+		
 	}
-
-	@Override
-	public List<Node> generateSuccessors() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
