@@ -32,12 +32,14 @@ public class NQueens implements HillClimbing {
 	}
 
 	@Override
-	public Node hillClimbing() {
+	public Object[] hillClimbing() {
 		Node current = makeNode(new StateImpl(this.value));
+		int noOfSteps = 0;
 		while(true){
 			Node neighbour = getHighestValuedSuccessor(current);
+			noOfSteps++;
 			if (current.getHeuristicValue().compareTo(neighbour.getHeuristicValue()) <= 0){
-				return current;
+				return new Object[]{current, noOfSteps};
 			}
 			current = neighbour;
 		}

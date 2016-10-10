@@ -10,12 +10,16 @@ public class NQueensRandomRestart extends NQueens {
 	public Object[] randomRestartHC() {
 
 		int numberOfRestarts = 0;
+		Object[] obj = new Object[2];
 		Node result = null;
+		int noOfSteps = 0;
 		do {
-			result = super.hillClimbing();
+			obj = super.hillClimbing();
+			result = (Node) obj[0];
+			noOfSteps += (Integer)obj[1];
 			numberOfRestarts++;
 		} while (result.getHeuristicValue() != 0);
-		return new Object[]{numberOfRestarts, result};
+		return new Object[]{numberOfRestarts, result, noOfSteps};
 	}
 
 }

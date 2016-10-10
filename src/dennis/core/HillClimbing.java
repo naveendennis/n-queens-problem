@@ -5,7 +5,7 @@ import dennis.core.beans.State;
 
 public interface HillClimbing {
 	Node makeNode(State currentState);
-	Node hillClimbing();
+	Object[] hillClimbing();
 	Node getHighestValuedSuccessor(Node current);
 
 }
