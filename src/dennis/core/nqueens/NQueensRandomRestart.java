@@ -16,10 +16,10 @@ public class NQueensRandomRestart extends NQueens {
 		do {
 			obj = super.hillClimbing();
 			result = (Node) obj[0];
-			noOfSteps += (Integer)obj[1];
+			noOfSteps += (Integer) obj[1];
 			numberOfRestarts++;
 		} while (result.getHeuristicValue() != 0);
-		return new Object[]{numberOfRestarts, result, noOfSteps};
+		return new Object[] { numberOfRestarts, result, noOfSteps };
 	}
 
 }

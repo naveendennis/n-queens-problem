@@ -17,15 +17,15 @@ public class NQueens implements HillClimbing {
 
 	private static Random RANDOM;
 	private int value;
-	
-	static{
+
+	static {
 		RANDOM = new Random();
 	}
-	
-	public NQueens(int value){
+
+	public NQueens(int value) {
 		this.value = value;
 	}
-	
+
 	@Override
 	public Node makeNode(State currentState) {
 		return new NodeImpl(currentState);
@@ -35,11 +35,11 @@ public class NQueens implements HillClimbing {
 	public Object[] hillClimbing() {
 		Node current = makeNode(new StateImpl(this.value));
 		int noOfSteps = 0;
-		while(true){
+		while (true) {
 			Node neighbour = getHighestValuedSuccessor(current);
 			noOfSteps++;
-			if (current.getHeuristicValue().compareTo(neighbour.getHeuristicValue()) <= 0){
-				return new Object[]{current, noOfSteps};
+			if (current.getHeuristicValue().compareTo(neighbour.getHeuristicValue()) <= 0) {
+				return new Object[] { current, noOfSteps };
 			}
 			current = neighbour;
 		}
@@ -47,24 +47,25 @@ public class NQueens implements HillClimbing {
 
 	@Override
 	public Node getHighestValuedSuccessor(Node current) {
-		
-		PriorityQueue<Node> allSuccessors = NodeUtilImpl.getInstance().calculateHeuristicValuesForAllSuccessors(current);
-//		printTreeSet(allSuccessors);
+
+		PriorityQueue<Node> allSuccessors = NodeUtilImpl.getInstance()
+				.calculateHeuristicValuesForAllSuccessors(current);
+		// printTreeSet(allSuccessors);
 		Iterator<Node> iterator = allSuccessors.iterator();
 		List<Node> topSuccessors = new ArrayList<Node>();
 		int heuristicValue = -1;
-		while(iterator.hasNext()){
+		while (iterator.hasNext()) {
 			Node currentNode = (Node) iterator.next();
-			if(heuristicValue == -1){
+			if (heuristicValue == -1) {
 				heuristicValue = currentNode.getHeuristicValue();
 				topSuccessors.add(currentNode);
-			}else if(heuristicValue == currentNode.getHeuristicValue()){
+			} else if (heuristicValue == currentNode.getHeuristicValue()) {
 				topSuccessors.add(currentNode);
-			}else{
+			} else {
 				break;
 			}
 		}
 		return topSuccessors.get(RANDOM.nextInt(topSuccessors.size()));
-		
+
 	}
 }

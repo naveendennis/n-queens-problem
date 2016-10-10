@@ -56,9 +56,9 @@ public class NodeUtilImpl implements NodeUtil {
 		int[] state = node.getState().getValue();
 		for (int outer = 0; outer < state.length; outer++) {
 			Integer[] value = this.populate(state.length, state[outer]);
-			for (int index = 0 ; index < value.length; index++) {
+			for (int index = 0; index < value.length; index++) {
 				State newState = new StateImpl(node.getState());
-				newState.setState( value[index], outer);
+				newState.setState(value[index], outer);
 				adjacentNodes.add(new NodeImpl(newState));
 			}
 		}
