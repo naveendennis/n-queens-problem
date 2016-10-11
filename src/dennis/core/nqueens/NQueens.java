@@ -15,25 +15,28 @@ import dennis.core.util.NodeUtilImpl;
 
 public class NQueens implements HillClimbing {
 
-	private static Random RANDOM;
-	private int value;
+	protected static Random RANDOM;
+	protected int noOfQueens;
+	protected Node current;
 
 	static {
 		RANDOM = new Random();
 	}
 
 	public NQueens(int value) {
-		this.value = value;
+		this.noOfQueens = value;
 	}
 
 	@Override
 	public Node makeNode(State currentState) {
-		return new NodeImpl(currentState);
+		Node newNode = new NodeImpl(currentState);
+		newNode.setHeuristicValue(NodeUtilImpl.getInstance().calculateHVGameState(currentState));
+		return newNode;
 	}
 
 	@Override
 	public Object[] hillClimbing() {
-		Node current = makeNode(new StateImpl(this.value));
+		current = makeNode(new StateImpl(this.noOfQueens));
 		int noOfSteps = 0;
 		while (true) {
 			Node neighbour = getHighestValuedSuccessor(current);
@@ -47,10 +50,14 @@ public class NQueens implements HillClimbing {
 
 	@Override
 	public Node getHighestValuedSuccessor(Node current) {
+		List<Node> topSuccessors = getBestSuccessors(current);
+		return topSuccessors.get(RANDOM.nextInt(topSuccessors.size()));
+	}
 
+	@Override
+	public List<Node> getBestSuccessors(Node current) {
 		PriorityQueue<Node> allSuccessors = NodeUtilImpl.getInstance()
 				.calculateHeuristicValuesForAllSuccessors(current);
-		// printTreeSet(allSuccessors);
 		Iterator<Node> iterator = allSuccessors.iterator();
 		List<Node> topSuccessors = new ArrayList<Node>();
 		int heuristicValue = -1;
@@ -65,7 +72,7 @@ public class NQueens implements HillClimbing {
 				break;
 			}
 		}
-		return topSuccessors.get(RANDOM.nextInt(topSuccessors.size()));
+		return topSuccessors;
 
 	}
 }

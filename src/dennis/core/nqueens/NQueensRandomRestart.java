@@ -7,9 +7,10 @@ public class NQueensRandomRestart extends NQueens {
 		super(size);
 	}
 
-	public Object[] randomRestartHC() {
+	@Override
+	public Object[] hillClimbing() {
 
-		int numberOfRestarts = 0;
+		int numberOfRestarts = -1;
 		Object[] obj = new Object[2];
 		Node result = null;
 		int noOfSteps = 0;

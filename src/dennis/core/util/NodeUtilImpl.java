@@ -21,7 +21,7 @@ public class NodeUtilImpl implements NodeUtil {
 	}
 
 	@Override
-	public int calculateHeuristicValue(State state) {
+	public int calculateHVGameState(State state) {
 		int heuristicValue = 0;
 		int[] currentState = state.getValue();
 		for (int eachQueen = 0; eachQueen < currentState.length - 1; eachQueen++) {
@@ -39,8 +39,9 @@ public class NodeUtilImpl implements NodeUtil {
 					heuristicValue++;
 				}
 			}
-			for (int otherQueen = eachQueen + 1; otherQueen < currentState.length; otherQueen++) {
-				if (currentState[otherQueen] == currentState[eachQueen]) {
+			int currentQueen = colVal;
+			for (int otherQueen = 0; otherQueen < currentState.length; otherQueen++) {
+				if (currentState[otherQueen] == currentState[currentQueen] && otherQueen != currentQueen) {
 					heuristicValue++;
 				}
 			}
@@ -59,7 +60,9 @@ public class NodeUtilImpl implements NodeUtil {
 			for (int index = 0; index < value.length; index++) {
 				State newState = new StateImpl(node.getState());
 				newState.setState(value[index], outer);
-				adjacentNodes.add(new NodeImpl(newState));
+				Node newNode = new NodeImpl(newState);
+				newNode.setHeuristicValue(this.calculateHVGameState(newState));
+				adjacentNodes.add(newNode);
 			}
 		}
 		return adjacentNodes;
@@ -73,5 +76,8 @@ public class NodeUtilImpl implements NodeUtil {
 		list.remove(currentValue);
 		return list.toArray(new Integer[list.size()]);
 	}
+
+	
+	
 
 }
