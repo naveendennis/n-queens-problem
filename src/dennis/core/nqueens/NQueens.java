@@ -13,6 +13,13 @@ import dennis.core.beans.nqueens.NodeImpl;
 import dennis.core.beans.nqueens.StateImpl;
 import dennis.core.util.NodeUtilImpl;
 
+/**
+ * Heuristic Value used is the number of attacking queens. Here the NQueens is
+ * solved by Steepest HillClimbing
+ * 
+ * @author dennis
+ *
+ */
 public class NQueens implements HillClimbing {
 
 	protected static Random RANDOM;
@@ -27,6 +34,9 @@ public class NQueens implements HillClimbing {
 		this.noOfQueens = value;
 	}
 
+	/**
+	 * @see dennis.core.HillClimbing.makeNode()
+	 */
 	@Override
 	public Node makeNode(State currentState) {
 		Node newNode = new NodeImpl(currentState);
@@ -34,6 +44,10 @@ public class NQueens implements HillClimbing {
 		return newNode;
 	}
 
+	/**
+	 * @see dennis.core.HillClimbing.hillClimbing()
+	 * @return array of Object currentNode(Node) and number of steps
+	 */
 	@Override
 	public Object[] hillClimbing() {
 		current = makeNode(new StateImpl(this.noOfQueens));
@@ -48,12 +62,23 @@ public class NQueens implements HillClimbing {
 		}
 	}
 
+	/**
+	 * Picks one Node randomly from the list of bestSuccessors
+	 * 
+	 * @see dennis.core.ClimbHeuristic.getHighestValuedSuccessor()
+	 */
 	@Override
 	public Node getHighestValuedSuccessor(Node current) {
 		List<Node> topSuccessors = getBestSuccessors(current);
 		return topSuccessors.get(RANDOM.nextInt(topSuccessors.size()));
 	}
 
+	/**
+	 * Calculates the heuristics for the currentNode and computes the best list
+	 * of successors for the current Node
+	 * 
+	 * @see dennis.core.ClimbHeuristic.getBestSuccessors()
+	 */
 	@Override
 	public List<Node> getBestSuccessors(Node current) {
 		PriorityQueue<Node> allSuccessors = NodeUtilImpl.getInstance()

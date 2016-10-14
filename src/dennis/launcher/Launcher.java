@@ -20,39 +20,22 @@ public class Launcher {
 		NQueens randomRestart = new NQueensRandomRestart(noOfQueens);
 		Object[] result = randomRestart.hillClimbing();
 
-		System.out.println("Number of Restarts: " + result[0]);
-		System.out.println("No of Steps(state changes): " + result[2]);
-		System.out.println("Solution: ");
-		printResult(((Node) result[1]).getState());
-	}
-
-	public static void steepestClimbNQueens(int noOfQueens) {
-		NQueens nQueens = new NQueens(noOfQueens);
-		Object[] result = nQueens.hillClimbing();
+		System.out.println("Number of Restarts: " + result[2]);
 		System.out.println("No of Steps(state changes): " + result[1]);
 		System.out.println("Solution: ");
-		Node goalNode = ((Node) result[0]);
-		printResult(goalNode.getState());
-		if (goalNode.getHeuristicValue() != 0) {
-			System.out.println("\t (Steepest Ascent Hill Climbing is STUCK!!)");
-		}
-
+		printResult(((Node) result[0]).getState());
 	}
 
-	public static void runComparison() {
+	/**
+	 * Runs a comparison between steepest ascent and randomrestart
+	 */
+	public static void runLoadCheck() {
 		int noOfQueens = 10;
 		try {
 			while (true) {
 				System.out.println("$ Number of Queens: " + noOfQueens);
-				System.out.println("$ RandomRestart VS Steepest Climb comparison");
-				System.out.println();
 				System.out.println("$ Random Restart: ");
 				randomRestartNQueens(noOfQueens);
-				System.out.println();
-				System.out.println("*******************************************************************");
-				System.out.println();
-				System.out.println("$ Steepest Climb: ");
-				steepestClimbNQueens(noOfQueens);
 				noOfQueens++;
 				System.out.println();
 				System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
@@ -61,7 +44,7 @@ public class Launcher {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			System.out.println("Max Number of Queens computable: " + (noOfQueens-1));
+			System.out.println("Max Number of Queens computable during test: " + (noOfQueens - 1));
 		}
 
 	}
@@ -77,14 +60,15 @@ public class Launcher {
 	}
 
 	public static void main(String[] args) {
-		System.out.println("Do you want to run comparison of Steepest Ascent VS Random Restart ?(Y/N)");
-		String choice = in.next();
-		if (choice.toLowerCase().equals("y")) {
-			runComparison();
-		} else {
-			System.out.println("\nEnter the size of the chessboard (NxN) where N(no of Queens)= ");
-			int noOfQueens = in.nextInt();
+
+		System.out.println("Runs at acceptable speeds for noOfQueens = 25 but it can go upto 43-50 queens if patient");
+		System.out.println("\nEnter the size of the chessboard (NxN) where N(no of Queens)= ");
+		int noOfQueens = in.nextInt();
+		try {
 			randomRestartNQueens(noOfQueens);
+		} catch (Exception e) {
+			System.out.println("System not able to compute the game state for specified number of queens "
+					+ "because of the lack of heap space -->> Try N=25");
 		}
 
 		in.close();

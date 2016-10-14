@@ -9,6 +9,12 @@ import dennis.core.beans.State;
 import dennis.core.beans.nqueens.NodeImpl;
 import dennis.core.beans.nqueens.StateImpl;
 
+/**
+ * A utility class for the node class
+ * 
+ * @author dennis
+ *
+ */
 public class NodeUtilImpl implements NodeUtil {
 
 	private static NodeUtil instance;
@@ -20,6 +26,11 @@ public class NodeUtilImpl implements NodeUtil {
 		return instance;
 	}
 
+	/**
+	 * Calculates the heuristicValue for the current game state.
+	 * 
+	 * @see dennis.core.util.NodeUtil.calculateHVGameState()
+	 */
 	@Override
 	public int calculateHVGameState(State state) {
 		int heuristicValue = 0;
@@ -51,6 +62,11 @@ public class NodeUtilImpl implements NodeUtil {
 
 	}
 
+	/**
+	 * Calculates the heuristicValue for the entireGame State.
+	 * 
+	 * @see dennis.core.util.calculateHeuristicValuesForAllSuccessors()
+	 */
 	@Override
 	public PriorityQueue<Node> calculateHeuristicValuesForAllSuccessors(Node node) {
 		PriorityQueue<Node> adjacentNodes = new PriorityQueue<Node>();
@@ -76,8 +92,5 @@ public class NodeUtilImpl implements NodeUtil {
 		list.remove(currentValue);
 		return list.toArray(new Integer[list.size()]);
 	}
-
-	
-	
 
 }

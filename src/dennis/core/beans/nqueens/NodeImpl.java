@@ -3,6 +3,11 @@ package dennis.core.beans.nqueens;
 import dennis.core.beans.Node;
 import dennis.core.beans.State;
 
+/**
+ * @see dennis.core.beans.Node
+ * @author dennis
+ *
+ */
 public class NodeImpl implements Node, Comparable<NodeImpl> {
 
 	private Integer heuristicValue;

@@ -4,6 +4,11 @@ import java.util.Random;
 
 import dennis.core.beans.State;
 
+/**
+ * @see dennis.core.beans.State
+ * @author dennis
+ *
+ */
 public class StateImpl implements State {
 
 	private int state[];
@@ -44,5 +49,5 @@ public class StateImpl implements State {
 		state[index] = value;
 		return this;
 	}
-	
+
 }
